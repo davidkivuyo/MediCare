@@ -13,7 +13,7 @@ if (isset($_POST['make_payment'])) {
     if (strlen($card) >= 12) {
         $sql = "UPDATE payments SET payment_status = 'Paid', payment_date = NOW() WHERE app_id = $app_id";
         if ($conn->query($sql)) {
-            header("Location: dashboard.php?payment=success");
+            header("Location: index.php?payment=success");
             exit();
         }
     } else {
@@ -22,7 +22,7 @@ if (isset($_POST['make_payment'])) {
 }
 
 if (!isset($_GET['app_id'])) {
-    header("Location: dashboard.php");
+    header("Location: index.php");
     exit();
 }
 $app_id = $_GET['app_id'];
@@ -43,7 +43,7 @@ $amount = $_GET['amount'];
 </div>
 
 <div class="main-nav">
-     <a href="dashboard.php" class="btn-secondary">Back to Dashboard</a>
+     <a href="index.php" class="btn-secondary">Back to Dashboard</a>
      <a href="login.php" class="logout-link">Logout</a>
 </div>
 

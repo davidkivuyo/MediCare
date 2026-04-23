@@ -24,21 +24,21 @@ if ($role == 'admin') {
     if (isset($_GET['delete_app'])) {
         $app_id = $_GET['delete_app'];
         $conn->query("DELETE FROM appointments WHERE app_id=$app_id");
-        header("Location: dashboard.php?view=appointments");
+        header("Location: index.php?view=appointments");
         exit();
     }
     
     if (isset($_GET['delete_patient'])) {
         $pid = $_GET['delete_patient'];
         $conn->query("DELETE FROM patients WHERE pid=$pid");
-        header("Location: dashboard.php?view=patients");
+        header("Location: index.php?view=patients");
         exit();
     }
     
     if (isset($_GET['delete_doctor'])) {
         $doc_id = $_GET['delete_doctor'];
         $conn->query("DELETE FROM doctors WHERE doc_id=$doc_id");
-        header("Location: dashboard.php?view=doctors");
+        header("Location: index.php?view=doctors");
         exit();
     }
     
@@ -49,7 +49,7 @@ if ($role == 'admin') {
         $password = $_POST['password'];
         $sql = "INSERT INTO patients (fullname, phone, username, password) VALUES ('$fullname', '$phone', '$username', '$password')";
         $conn->query($sql);
-        header("Location: dashboard.php?view=patients");
+        header("Location: index.php?view=patients");
         exit();
     }
     
@@ -82,7 +82,7 @@ if ($role == 'admin') {
                 )";
         
         $conn->query($sql);
-        header("Location: dashboard.php?view=doctors");
+        header("Location: index.php?view=doctors");
         exit();
     }
 
@@ -92,7 +92,7 @@ if ($role == 'admin') {
     if (isset($_GET['delete_app'])) {
         $app_id = $_GET['delete_app'];
         $conn->query("DELETE FROM appointments WHERE app_id=$app_id AND patient_id=$pid");
-        header("Location: dashboard.php?view=my_appointments");
+        header("Location: index.php?view=my_appointments");
         exit();
     }
 
@@ -101,7 +101,7 @@ if ($role == 'admin') {
         $app_date = $_POST['app_date'];
         $sql = "INSERT INTO appointments (patient_id, doctor_id, app_date) VALUES ($pid, $doc_id, '$app_date')";
         $conn->query($sql);
-        header("Location: dashboard.php?view=my_appointments");
+        header("Location: index.php?view=my_appointments");
         exit();
     }
 }
@@ -132,7 +132,7 @@ if ($role == 'admin') {
         <a href="?view=my_appointments" class="<?php echo $view == 'my_appointments' ? 'btn-primary' : 'btn-secondary'; ?>">My Appointments</a>
         <a href="?view=book_appointment" class="<?php echo $view == 'book_appointment' ? 'btn-primary' : 'btn-secondary'; ?>">Book Appointment</a>
     <?php endif; ?>
-    <a href="login.php" class="logout-link">Logout</a>
+    <a href="logout.php" class="logout-link">Logout</a>
 </div>
 
 <div class="content-card">

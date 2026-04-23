@@ -43,7 +43,7 @@ Medicare-Portal/
 │── index.php
 │── login.php
 │── register.php
-│── dashboard.php
+│── index.php
 │── admin/
 │── assets/
 │── database/

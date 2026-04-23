@@ -29,7 +29,7 @@ if (isset($_POST['login'])) {
     if ($username === 'admin') {
         $_SESSION['user'] = 'admin';
         $_SESSION['role'] = 'admin';
-        header("Location: dashboard.php");
+        header("Location: index.php");
         exit();
     } 
     else {
@@ -40,7 +40,7 @@ if (isset($_POST['login'])) {
             $_SESSION['user'] = $row['fullname'];
             $_SESSION['role'] = 'patient';
             $_SESSION['pid'] = $row['pid'];
-            header("Location: dashboard.php");
+            header("Location: index.php");
             exit();
         } else {
             $error = "Invalid Username or Password";

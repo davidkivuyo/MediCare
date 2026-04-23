@@ -15,7 +15,7 @@ if (isset($_POST['update_patient'])) {
     
     $sql = "UPDATE patients SET fullname='$fullname', phone='$phone', username='$username' WHERE pid=$pid";
     if ($conn->query($sql)) {
-        header("Location: dashboard.php?view=patients");
+        header("Location: index.php?view=patients");
         exit();
     } else {
         $error = "Error updating record: " . $conn->error;
@@ -42,7 +42,7 @@ $patient = $result->fetch_assoc();
 </div>
 
 <div class="main-nav">
-     <a href="dashboard.php?view=patients" class="btn-secondary">Back to Patient Management</a>
+     <a href="index.php?view=patients" class="btn-secondary">Back to Patient Management</a>
      <a href="login.php" class="logout-link">Logout</a>
 </div>
 

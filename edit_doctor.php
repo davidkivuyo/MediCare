@@ -48,7 +48,7 @@ if (isset($_POST['update_doctor'])) {
                 WHERE doc_id=$doc_id";
                 
         if ($conn->query($sql)) {
-            header("Location: dashboard.php?view=doctors&status=updated");
+            header("Location: index.php?view=doctors&status=updated");
             exit();
         } else {
             $error = "Error updating record: " . $conn->error;
@@ -76,7 +76,7 @@ $doctor = $result->fetch_assoc();
 </div>
 
 <div class="main-nav">
-     <a href="dashboard.php?view=doctors" class="btn-secondary">Back to Doctor Management</a>
+     <a href="index.php?view=doctors" class="btn-secondary">Back to Doctor Management</a>
      <a href="login.php" class="logout-link">Logout</a>
 </div>
 
