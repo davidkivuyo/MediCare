@@ -5,7 +5,7 @@ $doctors_result = $conn->query("SELECT * FROM doctors ORDER BY doc_name");
 
 if (isset($_POST['register'])) {
     $reg_user = $_POST['reg_user'];
-    $reg_pass = $_POST['reg_pass'];
+    $reg_pass = password_hash($_POST['reg_pass'], PASSWORD_DEFAULT);
     $reg_name = $_POST['reg_name'];
     $reg_phone = $_POST['reg_phone'];
 

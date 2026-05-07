@@ -200,7 +200,7 @@ if ($role == 'admin') {
                     <label>Phone:</label>
                     <input type="text" name="phone" required>
                     <label>Username:</label>
-                    <input type="text" " name="username" required>
+                    <input type="text" name="username" required>
                     <label>Password:</label>
                     <input type="password" name="password" required>
                     <button type="submit" name="add_patient" class="btn-success">Add Patient</button>
