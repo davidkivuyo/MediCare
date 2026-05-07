@@ -9,9 +9,10 @@ if (isset($_POST['register'])) {
     $reg_name = $_POST['reg_name'];
     $reg_phone = $_POST['reg_phone'];
 
-    $sql = "INSERT INTO patients (username, password, fullname, phone) VALUES ('$reg_user', '$reg_pass', '$reg_name', '$reg_phone')";
-    
-    if ($conn->query($sql)) {
+    $stmt = $conn->prepare("INSERT INTO patients (username, password, fullname, phone) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $reg_user, $reg_pass, $reg_name, $reg_phone);
+
+    if ($stmt->execute()) {
         echo "<script>alert('Registration Successful! Please Login.');</script>";
     } else {
         if (str_contains($conn->error, "Duplicate entry")) {
@@ -20,12 +21,13 @@ if (isset($_POST['register'])) {
             echo "<script>alert('Error: " . $conn->error . "');</script>";
         }
     }
+    $stmt->close();
 }
 
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-
+ 
     if ($username === 'admin') {
         $_SESSION['user'] = 'admin';
         $_SESSION['role'] = 'admin';
@@ -33,18 +35,26 @@ if (isset($_POST['login'])) {
         exit();
     } 
     else {
-        $sql = "SELECT * FROM patients WHERE username='$username' AND password='$password'";
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("SELECT pid, fullname, password FROM patients WHERE username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $_SESSION['user'] = $row['fullname'];
-            $_SESSION['role'] = 'patient';
-            $_SESSION['pid'] = $row['pid'];
-            header("Location: index.php");
-            exit();
+            if (password_verify($password, $row['password'])) {
+                $_SESSION['user'] = $row['fullname'];
+                $_SESSION['role'] = 'patient';
+                $_SESSION['pid'] = $row['pid'];
+                header("Location: index.php");
+                exit();
+            } else {
+                $error = "Invalid Username or Password";
+            }
         } else {
             $error = "Invalid Username or Password";
         }
+        $stmt->close();
     }
 }
 

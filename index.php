@@ -46,9 +46,13 @@ if ($role == 'admin') {
         $fullname = $_POST['fullname'];
         $phone = $_POST['phone'];
         $username = $_POST['username'];
-        $password = $_POST['password'];
-        $sql = "INSERT INTO patients (fullname, phone, username, password) VALUES ('$fullname', '$phone', '$username', '$password')";
-        $conn->query($sql);
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        
+        $stmt = $conn->prepare("INSERT INTO patients (fullname, phone, username, password) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $fullname, $phone, $username, $password);
+        $stmt->execute();
+        $stmt->close();
+        
         header("Location: index.php?view=patients");
         exit();
     }
